@@ -1,5 +1,6 @@
-import socket from '../socket_io/socket'
+
 import Peer from 'simple-peer'
+import socket from '../index'
 
 const answerCall = ({
   caller,

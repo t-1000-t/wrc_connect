@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-
+import io from 'socket.io-client'
 import { Button, IconButton, TextField } from '@material-ui/core'
 import PhoneIcon from '@material-ui/icons/Phone'
 import callUser from '../middleware/callUser'
-import socket from '../socket_io/socket'
 import leaveCall from '../middleware/leaveCall'
 import answerCall from '../middleware/answerCall'
 import { Card, CardBody, Grid, Heading, Stack } from '@chakra-ui/react'
+
+import socket from '../index'
 
 const BoardRoom = () => {
   const [stream, setStream] = useState()
@@ -34,6 +35,13 @@ const BoardRoom = () => {
       console.log('id', id)
     })
 
+    socket.emit('message:created', 'Emit sent FRONT to Mango server!')
+
+    socket.on('message:created', (message) => {
+      console.log('New message FRONT!', message)
+      io.emit('message:created', message)
+    })
+
     socket.on('callUser', (data) => {
       setReceivingCall(true)
       setCaller(data.from)
@@ -43,6 +51,7 @@ const BoardRoom = () => {
 
     socket.on('disconnect', () => {
       socket.disconnect()
+      console.log('Disconnect server!')
     })
   }, [])
 

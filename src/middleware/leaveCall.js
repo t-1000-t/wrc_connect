@@ -1,4 +1,4 @@
-import socket from '../socket_io/socket'
+import socket from '../index'
 
 const leaveCall = ({ setCallEnded }) => {
   setCallEnded(true)

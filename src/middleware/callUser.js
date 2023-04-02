@@ -1,5 +1,5 @@
 import Peer from 'simple-peer'
-import socket from '../socket_io/socket'
+import socket from '../index'
 
 const callUser = ({
   idToCall,
